@@ -2,14 +2,14 @@ import sys
 import os
 import pandas as pd
 
-EXCEL_SPLIT_PATH = "EXCEL_SPLIT_PATH"
+EXCEL_DIFF_PATH = "EXCEL_DIFF_PATH"
 
 
-def split_excel_to_csv(excel_file: str, excel_split_path: str):
+def split_excel_to_csv(excel_file: str, excel_diff_path: str):
     # 读取 Excel 文件（优化内存和速度）
     xls = pd.ExcelFile(excel_file, engine="openpyxl")
     file_name = os.path.basename(excel_file)  # 直接提取文件名
-    csv_path = f"{excel_split_path}/split/{file_name}"
+    csv_path = f"{excel_diff_path}/split/{file_name}"
     if not os.path.exists(csv_path):
         os.makedirs(csv_path)
     # 并行处理每个 Sheet
@@ -26,12 +26,12 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("用法: python split.py [excel文件]")
         sys.exit(-1)
-    excel_split_path = os.getenv(EXCEL_SPLIT_PATH)
-    if excel_split_path is None:
-        print(f"未定义环境变量: {EXCEL_SPLIT_PATH}")
+    excel_diff_path = os.getenv(EXCEL_DIFF_PATH)
+    if excel_diff_path is None:
+        print(f"未定义环境变量: {EXCEL_DIFF_PATH}")
         sys.exit(-1)
     excel_file = sys.argv[1]
     if not os.path.exists(excel_file):
         print(f"excel文件: {excel_file}不存在")
         sys.exit(-1)
-    split_excel_to_csv(excel_file, excel_split_path)
+    split_excel_to_csv(excel_file, excel_diff_path)
