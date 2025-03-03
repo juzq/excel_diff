@@ -1,13 +1,44 @@
 @echo off
 setlocal
+
+:: Ğ£Ñé²ÎÊı¸öÊı
+if "%~2"=="" (
+    echo ²ÎÊı¸öÊı²»ÕıÈ·£¬Çë´«ÈëÁ½¸ö²ÎÊı£¡
+    exit /b 1
+)
+
+:: Çå¿ÕsplitÎÄ¼ş¼Ğ
+set "target_folder=%EXCEL_DIFF_PATH%/split"
+if exist "%target_folder%" (
+    :: ½øÈëÄ¿±êÎÄ¼ş¼Ğ
+    pushd "%target_folder%" || (
+        echo ÎŞ·¨½øÈësplitÎÄ¼ş¼Ğ¡£
+        exit /b 1
+    )
+
+    :: ÒÆ³ıËùÓĞÎÄ¼şºÍ×ÓÄ¿Â¼
+    echo ÕıÔÚÇå¿ÕÎÄ¼ş¼Ğ...
+    attrib -h -s -r * /s /d >nul 2>&1  :: ÒÆ³ıËùÓĞÊôĞÔ
+    del /f /s /q * >nul 2>&1          :: É¾³ıËùÓĞÎÄ¼ş
+    for /d %%d in (*) do (             :: É¾³ıËùÓĞ×ÓÄ¿Â¼
+        rd /s /q "%%d" >nul 2>&1
+    )
+)
+
 set file1_path=%1
 python "%EXCEL_DIFF_PATH%/split.py" %file1_path%
-:: æå–å®Œæ•´æ–‡ä»¶åï¼ˆå«æ‰©å±•åï¼‰
+if not "%ERRORLEVEL%" == "0" (
+    exit /b 1
+)
+:: ÌáÈ¡ÍêÕûÎÄ¼şÃû£¨º¬À©Õ¹Ãû£©
 for %%I in ("%file1_path%") do set "file1_name=%%~nxI"
 
 set file2_path=%2
 python "%EXCEL_DIFF_PATH%/split.py" %file2_path%
-:: æå–å®Œæ•´æ–‡ä»¶åï¼ˆå«æ‰©å±•åï¼‰
+if not "%ERRORLEVEL%" == "0" (
+    exit /b 1
+)
+:: ÌáÈ¡ÍêÕûÎÄ¼şÃû£¨º¬À©Õ¹Ãû£©
 for %%I in ("%file2_path%") do set "file2_name=%%~nxI"
 
 
