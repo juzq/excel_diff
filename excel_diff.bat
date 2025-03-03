@@ -17,10 +17,13 @@ if exist "%target_folder%" (
     )
 
     :: 移除所有文件和子目录
-    echo 正在清空文件夹...
-    attrib -h -s -r * /s /d >nul 2>&1  :: 移除所有属性
-    del /f /s /q * >nul 2>&1          :: 删除所有文件
-    for /d %%d in (*) do (             :: 删除所有子目录
+    echo 正在清理对比缓存...
+    :: 移除所有属性
+    attrib -h -s -r * /s /d >nul 2>&1
+    :: 删除所有文件
+    del /f /s /q * >nul 2>&1
+    :: 删除所有子目录
+    for /d %%d in (*) do (
         rd /s /q "%%d" >nul 2>&1
     )
 )
@@ -32,6 +35,8 @@ if not "%ERRORLEVEL%" == "0" (
 )
 :: 提取完整文件名（含扩展名）
 for %%I in ("%file1_path%") do set "file1_name=%%~nxI"
+:: 去除文件名中的引号，svn传过来的有"
+set file1_name=%file1_name:"=%
 
 set file2_path=%2
 python "%EXCEL_DIFF_PATH%/split.py" %file2_path%
@@ -40,7 +45,9 @@ if not "%ERRORLEVEL%" == "0" (
 )
 :: 提取完整文件名（含扩展名）
 for %%I in ("%file2_path%") do set "file2_name=%%~nxI"
+:: 去除文件名中的引号，svn传过来的有"
+set file2_name=%file2_name:"=%
 
 
-"%BC_PATH%/BCompare.exe" "%EXCEL_DIFF_PATH%/split/%file1_name%" "%EXCEL_DIFF_PATH%/split/%file2_name%"
+"%BC_PATH%/BCompare.exe" %EXCEL_DIFF_PATH%/split/%file1_name% %EXCEL_DIFF_PATH%/split/%file2_name%
 

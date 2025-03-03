@@ -1,8 +1,8 @@
 ## Excel对比工具
-使用Beyond Compare对比有多个工作表（Sheet）的Excel文件，并支持在git和svn中调用该工具来对比。
+使用Beyond Compare对比一个Excel文件中的所有个工作表（Sheet），并支持在git和svn中调用该工具来进行对比。
 
 ### 环境配置
-* 设置环境变量：BC_PATH，值为Beyond Compare路径，例如`C:\Program Files (x86)\Beyond Compare 4`。
+* 安装[Beyond Compare](https://www.beyondcomparepro.com/download)，并设置环境变量：BC_PATH，值为Beyond Compare路径，例如`C:\Program Files (x86)\Beyond Compare 4`。
 * 设置环境变量：EXCEL_DIFF_PATH，值为excel_diff路径，例如`C:\workspace\test\excel_diff`。
 * 将%EXCEL_DIFF_PATH%添加到PATH环境变量。
 * 安装python3.7+，并添加到PATH环境变量。
@@ -23,3 +23,5 @@
 
 
 ### SVN
+* 打开TortoiseSVN设置，Diff Viewer-Advanced...-.xlsx-修改External Program为`excel_diff.bat %base %mine`
+* 对比提交历史中的excel：选中要对比的excel，右键，Show changes...
