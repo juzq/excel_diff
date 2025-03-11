@@ -7,6 +7,8 @@ if "%~2"=="" (
     exit /b 1
 )
 
+set current_dir=%cd%
+
 :: 清空split文件夹
 set "target_folder=%EXCEL_DIFF_PATH%/split"
 if exist "%target_folder%" (
@@ -28,7 +30,11 @@ if exist "%target_folder%" (
     )
 )
 
+cd %current_dir%
+echo 当前路径: %cd%
+
 set file1_path=%1
+echo 正在拆分excel: %file1_path%
 python "%EXCEL_DIFF_PATH%/split.py" %file1_path%
 if not "%ERRORLEVEL%" == "0" (
     exit /b 1
@@ -39,6 +45,7 @@ for %%I in ("%file1_path%") do set "file1_name=%%~nxI"
 set file1_name=%file1_name:"=%
 
 set file2_path=%2
+echo 正在拆分excel: %file2_path%
 python "%EXCEL_DIFF_PATH%/split.py" %file2_path%
 if not "%ERRORLEVEL%" == "0" (
     exit /b 1
