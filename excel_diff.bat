@@ -35,8 +35,9 @@ echo 当前路径: %cd%
 
 set file1_path=%1
 echo 正在拆分excel: %file1_path%
-python "%EXCEL_DIFF_PATH%/split.py" %file1_path%
+"%EXCEL_DIFF_PATH%/excel_split.exe" %file1_path%
 if not "%ERRORLEVEL%" == "0" (
+    pause
     exit /b 1
 )
 :: 提取完整文件名（含扩展名）
@@ -46,8 +47,9 @@ set file1_name=%file1_name:"=%
 
 set file2_path=%2
 echo 正在拆分excel: %file2_path%
-python "%EXCEL_DIFF_PATH%/split.py" %file2_path%
+"%EXCEL_DIFF_PATH%/excel_split.exe" %file2_path%
 if not "%ERRORLEVEL%" == "0" (
+    pause
     exit /b 1
 )
 :: 提取完整文件名（含扩展名）
