@@ -2,3 +2,4 @@ split/
 build/
 *.spec
 *.exe
+*.zip
