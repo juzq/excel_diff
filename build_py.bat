@@ -2,11 +2,11 @@
 
 echo building python to exe ...
 
-:: 杩涘叆褰撳墠鐩綍
+:: 进入当前目录
 set DIRNAME=%~dp0
 cd %DIRNAME%
 
-:: 璋冪敤pyinstaller鎵撳寘
+:: 调用pyinstaller打包
 python -m PyInstaller -F -n excel_split --distpath . split.py
 
 if %errorlevel% NEQ 0 (
